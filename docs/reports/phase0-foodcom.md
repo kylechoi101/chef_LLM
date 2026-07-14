@@ -15,20 +15,20 @@ no_steps                 1
 ```
 
 ## Dedup
-exact-dup rate: 0.0% | families: 199001
+exact-dup rate: 0.0% | families: 210687
 ```
-               n                                             title
-family_id                                                         
-231264     22476                        deep fried dessert thingys
-213471       109                                       afterburner
-194464        89                          another  cajun seasoning
-224990        72                           aunt vera s baked beans
-211799        67                                       a duck fart
-211157        57                            baked garlic asparagus
-205425        49                                  aaa potato salad
-128424        44                                      7 layer bars
-191627        43             almost another dump cake  just better
-128811        42  no time flat  nuked nachos with salsa and cheese
+             n                                  title
+family_id                                            
+141698     150  always perfect chocolate chip cookies
+159012      93                      alice s doughnuts
+176728      54                   beaumont inn cookies
+169491      38            a quick and easy white cake
+4370        31         abby s cream cheese pound cake
+135068      30                      one pot  brownies
+95172       29            amazing buttermilk biscuits
+66980       27                     banana bread blast
+24823       26                      abigail s cobbler
+32775       26    anise almond loaf     bread machine
 ```
 
 ## Quality
