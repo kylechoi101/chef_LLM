@@ -3,15 +3,15 @@
 231637 recipes | 1071520 ratings | 226590 rated recipes
 
 ## Lint
-pass rate: 28.1%
+pass rate: 79.7%
 ```
 lint_flags
-unused_ingredient    165932
-too_few_steps          2442
-time_missing           1094
-time_insane             256
-calorie_outlier          64
-no_steps                  1
+unused_ingredient    44358
+too_few_steps         2442
+time_missing          1094
+time_insane            256
+calorie_outlier         64
+no_steps                 1
 ```
 
 ## Dedup
@@ -34,13 +34,13 @@ family_id
 ## Quality
 ```
 0.10    0.000000
-0.25    0.000000
-0.50    0.000000
-0.75    0.904397
-0.90    0.920148
-0.99    0.940111
+0.25    0.896505
+0.50    0.916924
+0.75    0.921796
+0.90    0.930130
+0.99    0.949185
 ```
 
 top: bacon lattice tomato muffins  rsc; beth s melt in your mouth barbecue ribs  oven; uncle bill s method for cooking turkey
 
-bottom: a bit different  breakfast pizza; all in the kitchen  chili; alouette  potatoes
+bottom: apple a day  milk shake; better than sex  strawberries; calm your nerves  tonic
