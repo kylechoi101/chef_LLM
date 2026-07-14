@@ -7,6 +7,8 @@ import pandas as pd
 from datasketch import MinHash, MinHashLSH
 
 PERM = 128
+JACCARD_MIN = 0.6        # exact-verified family membership bar
+LSH_INDEX_THRESHOLD = 0.4  # indexed looser than JACCARD_MIN: LSH recalls candidates, exact check gates
 
 
 def _norm_title(t: str) -> str:
@@ -24,9 +26,21 @@ def _minhash(items) -> MinHash:
     return m
 
 
+_TITLE_STOP = frozenset("""
+the a an and or with in of for on to best easy quick simple classic my
+homemade style old fashioned ever perfect ultimate great favorite
+""".split())
+
+
+def _title_tokens(t: str) -> frozenset:
+    return frozenset(w for w in re.findall(r"[a-z]+", str(t).lower()) if w not in _TITLE_STOP)
+
+
 def assign_groups(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
-    keys = [(_norm_title(t), _ing_set(i)) for t, i in zip(df["title"], df["ingredients"])]
+    ing_sets = [_ing_set(i) for i in df["ingredients"]]
+    title_toks = [_title_tokens(t) for t in df["title"]]
+    keys = [(_norm_title(t), s) for t, s in zip(df["title"], ing_sets)]
 
     # exact dups: identical normalized title + ingredient set
     seen, dup_group = {}, []
@@ -35,27 +49,32 @@ def assign_groups(df: pd.DataFrame) -> pd.DataFrame:
     counts = pd.Series(dup_group).value_counts()
     df["dup_group"] = [g if counts[g] > 1 else -1 for g in dup_group]
 
-    # families: LSH candidates on ingredient sets, verified by Jaccard >= 0.6, union-find
-    lsh = MinHashLSH(threshold=0.6, num_perm=PERM)
-    hashes = [_minhash(k[1]) for k in keys]
-    for idx, mh in enumerate(hashes):
-        lsh.insert(str(idx), mh)
-    parent = list(range(len(df)))
-
-    def find(a):
-        while parent[a] != a:
-            parent[a] = parent[parent[a]]
-            a = parent[a]
-        return a
-
-    for idx, mh in enumerate(hashes):
-        for cand in lsh.query(mh):
+    # families: leader clustering — a recipe joins only by similarity to a
+    # family's LEADER (ingredient Jaccard >= 0.6 AND >= 1 shared title token),
+    # so single-linkage chaining (the 22k mega-family bug) is impossible.
+    # Highest-rated recipes are processed first and anchor dish families,
+    # matching the spec's "canonical center + variants" genealogy (4.2 stage 5).
+    hashes = [_minhash(s) for s in ing_sets]
+    lsh = MinHashLSH(threshold=LSH_INDEX_THRESHOLD, num_perm=PERM)  # indexes leaders only
+    order = (-df["rating_n"].fillna(0).to_numpy()).argsort(kind="stable")
+    family = [0] * len(df)
+    for idx in order:
+        idx = int(idx)
+        leader = None
+        for cand in lsh.query(hashes[idx]):
             j = int(cand)
-            a, b = keys[idx][1], keys[j][1]
-            if idx != j and a and len(a & b) / len(a | b) >= 0.6:
-                parent[find(idx)] = find(j)
-    df["family_id"] = [find(i) for i in range(len(df))]
+            a, b = ing_sets[idx], ing_sets[j]
+            if a and (title_toks[idx] & title_toks[j]) and len(a & b) / len(a | b) >= JACCARD_MIN:
+                leader = j
+                break
+        if leader is None:
+            lsh.insert(str(idx), hashes[idx])
+            leader = idx
+        family[idx] = leader
+    df["family_id"] = family
     return df
+    # ponytail: LSH recall is probabilistic near the 0.6 boundary; move to
+    # embedding-based families only if split-leakage audits demand tighter recall
 
 
 if __name__ == "__main__":
