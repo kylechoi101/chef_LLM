@@ -1,0 +1,9 @@
+user_id,recipe_id,date,rating,review
+2001,101,2019-06-01,5,Perfect cozy soup!
+2002,101,2019-06-15,4,"Good, added basil."
+2003,101,2019-07-01,0,Haven't made it yet but looks great.
+2004,102,2019-07-04,4,Simple and tasty.
+2005,103,2019-08-01,5,Kids devoured these.
+2006,103,2019-08-12,5,Weekend regular now.
+2007,103,2019-09-01,4,"Solid, a bit dense."
+2008,104,2019-09-15,0,Saving this for later.
