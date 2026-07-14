@@ -59,3 +59,14 @@ def test_season_to_taste_covers_salt_and_pepper():
 
 def test_genuinely_unused_still_detected():
     assert _unused(["saute the onion", "serve warm"], ["onion", "saffron"])
+
+
+def test_compound_word_variants_match():
+    # "corn flakes" listed, steps write it as one word (and vice versa)
+    assert not _unused(["crush the cornflakes", "mix with chocolate"], ["corn flakes"])
+    assert not _unused(["peel and grate the ginger root", "add to the wok"], ["fresh gingerroot"])
+
+
+def test_short_tokens_never_substring_match():
+    # "oil" must NOT count as used just because a step says "boil"
+    assert _unused(["boil the potatoes", "drain and serve"], ["potatoes", "olive oil"])

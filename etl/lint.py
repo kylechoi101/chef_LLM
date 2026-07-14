@@ -37,7 +37,12 @@ def _tokens(text: str) -> set[str]:
 
 def _ingredient_used(name: str, body: set[str]) -> bool:
     content = _tokens(name) - {_stem(w) for w in _DESCRIPTORS}
-    return not content or bool(content & body)
+    if not content or content & body:
+        return True
+    # compound-word fallback: "corn flakes" ~ "cornflakes", "gingerroot" ~ "ginger root";
+    # len>3 on both sides so "oil" never matches "boil"
+    long_body = [b for b in body if len(b) > 3]
+    return any(t in b or b in t for t in content if len(t) > 3 for b in long_body)
 
 
 def lint_recipe(title, minutes, steps, ingredients, calories) -> list[str]:
