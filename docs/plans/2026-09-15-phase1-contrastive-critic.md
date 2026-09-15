@@ -52,6 +52,8 @@ Two definitions that must stay separate from here on:
 
 2. **Replace the quality score with a positive-confidence tier.** Compute a per-recipe weight from reproduction count, source tier, longevity, and guideline pass, and drop star mean from the global score. Three tiers are enough for now.
 
+   Evidence pools across a family's cosmetic variants: reposts by different authors and step reorderings that leave the dataflow graph unchanged are the same recipe, and distinct-author copy count is itself a reproduction signal (count authors, not pages, to blunt content farms).
+
 3. **Add guidelines as hard lint gates.** Encode food-safety rules and the NIH dietary constraints as deterministic checks alongside the sanity flags. Anything failing safety is excluded from positives regardless of ratings.
 
 4. **Build synthetic negatives from high-confidence positives.** Write mutation operators such as drop the acid, ten-times the salt, remove leavening, and emulsify after the boil. Tag every negative with its failure mode so the critic can be audited per mode.
@@ -59,6 +61,8 @@ Two definitions that must stay separate from here on:
 5. **Scrape natural negatives.** Pull Cooking StackExchange failure questions with accepted answers and the pre-fix versions implied by review complaints. Grade these by confidence, since a low-rated recipe on a survivor site is a weaker negative than a mutation.
 
 6. **Mine within-family preference pairs.** From the dedup families, select variant pairs where both sides have many ratings and the edit between them is small. Those pairs are the only place star ratings carry taste information.
+
+   Pairs are formed only across meaningful edits, where the swapped or changed steps share a dependency edge in the step graph; cosmetic variants pool under step 2 and never form a pair.
 
 7. **Add a second positive source.** Extract recipes from YouTube cooking transcripts with engagement as the reproduction proxy, or ingest RecipeNLG for breadth. Both go through the same IR and confidence tiers so sources stay comparable.
 
