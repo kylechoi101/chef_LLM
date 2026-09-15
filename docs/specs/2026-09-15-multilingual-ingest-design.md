@@ -51,7 +51,7 @@ data/raw/youtube/{lang}/videos-00000.parquet
 3. Site list after the 2026-09-15 probe (all parse 10/10 unless noted):
    ko 10000recipe (schema.org fallback; ratings sparse, no review text) ·
    ja Cookpad by **ID enumeration** (no sitemap; IDs are global across locales, so rows come back ja/id/ar/es… and `lang` is taken from the page) ·
-   zh **deferred** (xiachufang, meishichina, douguo, xinshipu all 403/429 the crawler agent; YouTube zh works) ·
+   zh **not crawled** (xiachufang, meishichina, douguo, xinshipu all 403/429 the crawler agent; Common Crawl holds only ~300 pages). Instead: the published **XiaChuFang corpus** (Liu et al., EMNLP 2022; 1,479,751 recipes after ingest, 1,178,450 with a curated `dish` label over 29,548 dishes; pre-Dec 2020, no ratings/comments) via `etl/ingest_xiachufang.py` → `data/corpus/xiachufang.parquet`. Reproduction signal for zh to come from Bilibili engagement/comments (yt-dlp works; no subtitles) and YouTube zh transcripts (Taiwan/HK/diaspora-skewed, label as such) ·
    es Recetas de Rechupete under abc.es (RecetasGratis' sitemap moved and 404s) ·
    fr Marmiton (slow, ~17 s/page) · de lecker.de (Chefkoch 403s every sitemap path) ·
    it GialloZafferano · pt TudoGostoso.

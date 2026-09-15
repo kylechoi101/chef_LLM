@@ -68,6 +68,8 @@ Two definitions that must stay separate from here on:
 
 7. **Add a second positive source.** Extract recipes from YouTube cooking transcripts with engagement as the reproduction proxy, or ingest RecipeNLG for breadth. Both go through the same IR and confidence tiers so sources stay comparable.
 
+   **In progress 2026-09-15** — pulled ahead of step 3. Web crawl (ko/ja/es/fr/de/it/pt) + YouTube (9 langs) running on the Mac; design in `docs/specs/2026-09-15-multilingual-ingest-design.md`. Chinese bulk source landed: XiaChuFang corpus, 1.48M recipes → `data/corpus/xiachufang.parquet`.
+
 8. **Train critic v0 on DSMLP.** Fit an encoder with a contrastive or energy objective, weighting positives by confidence and mixing all negative sources. This fits on any free 24 GB GPU and needs no generator.
 
 9. **Calibrate the critic before trusting it.** Report separation AUC on held-out natural negatives, not just mutations, to catch corruption-artifact learning. Report Spearman on the held-out within-family pairs for the taste gradient.
