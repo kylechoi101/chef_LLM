@@ -1,0 +1,24 @@
+{
+  "id": "abc123XYZ00",
+  "title": "김치찌개 황금레시피",
+  "description": "재료: 김치 300g, 돼지고기 200g\n1. 고기를 볶는다",
+  "channel": "테스트채널",
+  "channel_id": "UCtest",
+  "upload_date": "20240101",
+  "duration": 512,
+  "view_count": 120000,
+  "like_count": 3400,
+  "comment_count": 210,
+  "language": "ko",
+  "tags": ["김치찌개", "레시피"],
+  "chapters": [{"title": "재료", "start_time": 0, "end_time": 60}],
+  "subtitles": {
+    "ko": [{"ext": "vtt", "url": "https://example.test/manual.vtt"},
+           {"ext": "json3", "url": "https://example.test/manual.json3"}]
+  },
+  "automatic_captions": {
+    "ko-orig": [{"ext": "json3", "url": "https://example.test/auto-orig.json3"}],
+    "ko": [{"ext": "json3", "url": "https://example.test/auto.json3"}],
+    "en": [{"ext": "json3", "url": "https://example.test/auto-en.json3"}]
+  }
+}
