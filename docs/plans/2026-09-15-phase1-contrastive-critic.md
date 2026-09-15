@@ -54,6 +54,8 @@ Two definitions that must stay separate from here on:
 
    Evidence pools across a family's cosmetic variants: reposts by different authors and step reorderings that leave the dataflow graph unchanged are the same recipe, and distinct-author copy count is itself a reproduction signal (count authors, not pages, to blunt content farms).
 
+   **Done 2026-09-15** — `etl/confidence.py`, `docs/reports/phase1-step2-confidence.md`. Tier 3 = 9.6%, tier 2 = 39.2%, tier 1 = 51.1%. 140k reviews carry remake language. Copy pooling under an exact ingredient-set key is rare (1.7k groups); family-level pooling deferred to the step-graph work.
+
 3. **Add guidelines as hard lint gates.** Encode food-safety rules and the NIH dietary constraints as deterministic checks alongside the sanity flags. Anything failing safety is excluded from positives regardless of ratings.
 
 4. **Build synthetic negatives from high-confidence positives.** Write mutation operators such as drop the acid, ten-times the salt, remove leavening, and emulsify after the boil. Tag every negative with its failure mode so the critic can be audited per mode.
