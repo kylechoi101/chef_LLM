@@ -48,6 +48,8 @@ Two definitions that must stay separate from here on:
 
 1. **Validate the linter against reproduction data.** On a DSMLP CPU pod, cross-tab each lint flag against rating count in the existing parquet. Demote any flag whose flagged recipes rate and get reproduced like the passed ones, since that flag is an artifact.
 
+   **Done 2026-09-15** — `docs/reports/phase1-step1-lint-vs-rating.md`. No flag carries signal; `unused_ingredient` (19% of corpus) rates identically to pass. `lint_pass` is demoted to a diagnostic column.
+
 2. **Replace the quality score with a positive-confidence tier.** Compute a per-recipe weight from reproduction count, source tier, longevity, and guideline pass, and drop star mean from the global score. Three tiers are enough for now.
 
 3. **Add guidelines as hard lint gates.** Encode food-safety rules and the NIH dietary constraints as deterministic checks alongside the sanity flags. Anything failing safety is excluded from positives regardless of ratings.
